@@ -3,6 +3,55 @@
 #include <iomanip>
 using namespace std;
 
+#include "../../includes/heap/heap.h"
+
+
+bool test_print(bool debug){
+  if(debug){
+    Heap<int> mHeap; 
+    int a[] = {1,2,3,4}; 
+    for(int i = 0; i < 4; i++){
+      mHeap.insert(a[i]); 
+    }
+    cout<<mHeap<<endl; 
+  }
+  return true; 
+}
+
+bool test_remove(bool debug){
+  if(debug){
+    Heap<int> mHeap; 
+    int a[] = {1,2,3,4}; 
+
+    for(int i = 0; i < 4; i++){
+      mHeap.insert(a[i]); 
+    }
+    cout<<"before remove: "<<endl; 
+    cout<<mHeap<<endl; 
+
+    while(!mHeap.is_empty()){
+      mHeap.remove(); 
+      cout<<"after remove: "<<endl; 
+      cout<<mHeap<<endl; 
+      cout<<"--------------------"<<endl; 
+    }
+  }
+}
+
+
+bool test_verify(bool debug){
+  if(debug){
+    Heap<int> mHeap; 
+    for(int i = 0; i < 10; i++){
+      mHeap.insert(i); 
+    }
+
+    cout<<"tree: "<<endl; 
+    cout<<mHeap<<endl; 
+    cout<<"isValid: "<<mHeap.verify()<<endl; 
+  }
+  return true; 
+}
 bool test_stub(bool debug = false)
 {
   if (debug){
@@ -18,8 +67,17 @@ TEST(TEST_STUB, TestStub) {
   EXPECT_EQ(1, test_stub(false));
 }
 
+TEST(TEST_HEAP, testPrint){
+  EXPECT_EQ(1, test_print(false));
+}
 
+TEST(TEST_HEAP, testRemove){
+  EXPECT_EQ(1, test_remove(false));
+}
 
+TEST(TEST_HEAP, testVerify){
+  EXPECT_EQ(1, test_verify(true)); 
+}
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
