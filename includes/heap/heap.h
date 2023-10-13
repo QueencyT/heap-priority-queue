@@ -1,6 +1,7 @@
 #ifndef HEAP_H 
 #define HEAP_H 
 #include <iostream>
+#include <iomanip>
 
 using namespace std; 
 template <typename T>
