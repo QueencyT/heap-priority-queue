@@ -1,5 +1,5 @@
-#ifndef PCQUEUE_H 
-#define PGQUEUE_H 
+#ifndef PQUEUE_H 
+#define PQUEUE_H 
 
 #include "../../includes/heap/heap.h"
 #include "../../includes/heap/info.h"
@@ -44,7 +44,7 @@ public:
     }
 
     bool verify() const{
-        _heap.verify(); 
+       return _heap.verify(); 
     }
 
 private:
