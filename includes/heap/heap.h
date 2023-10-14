@@ -14,17 +14,17 @@ public:
 
     void insert(const T& insert_me){
         int index = _how_many; 
+        _heap[index] = insert_me; //should be one after the last item inserted //inserting 
         T parent = _heap[parent_index(index)];  
+       
 
-        _heap[_how_many] = insert_me; //should be one after the last item inserted //inserting 
-
-        while(parent < insert_me){ //what if at root/index 0?
-            swap_with_parent(index); //swapping child with parent
-            index = parent_index(index); //index updated to parent index
+        while(index != 0 && parent < insert_me){ //as long as we're not root and parent is less than us
+            swap_with_parent(index); //swapping child with parent //so now we're parent 
+            index = parent_index(index); //index updated to parent index //our index
             parent = _heap[parent_index(index)]; 
         }
         _how_many++; 
-    }   //insert into the heap //seems to be working so far
+    }   //insert into the heap 
 
     T remove(){
         T popped = _heap[0]; //cause we want to remove largest
@@ -32,8 +32,7 @@ public:
         int index = 0; 
         T leftChild = _heap[left_child_index(index)], rightChild = _heap[right_child_index(index)], curr = _heap[index];  
         _how_many--;
-
-        while((leftChild > curr || rightChild > curr) && left_child_index(index) < _how_many && right_child_index(index) < _how_many){
+        while((leftChild > curr || rightChild > curr) && !is_leaf(index)){ //at least one child -> so not leaf   
             index = big_child_index(index); 
             swap_with_parent(index); 
             leftChild = _heap[left_child_index(index)]; 
@@ -101,8 +100,8 @@ private:
     bool verify(int root) const{
         bool valid = true; //if empty tree do we want to return true? 
         //if at leaf, exit
-        if(root < _how_many && right_child_index(root) < _how_many && left_child_index(root) < _how_many){
-            if(_heap[root] < _heap[right_child_index(root)] || _heap[root] < _heap[left_child_index(root)]){
+        if(!is_leaf(root)){ //root < _how_many && left_child_index(root) < _how_many && right_child_index(root) < _how_many
+            if((right_child_index(root) < _how_many && _heap[root] < _heap[right_child_index(root)]) || (left_child_index(root) < _how_many && _heap[root] < _heap[left_child_index(root)])){//make sure not out of bounds
                 valid = false; 
                 return valid; 
             }
@@ -110,7 +109,7 @@ private:
                 valid = true; 
             }
             valid = verify(right_child_index(root)); 
-            valid = (valid && verify(left_child_index(root))); //work or no ? hmmmmmmmmmm
+            valid = (valid && verify(left_child_index(root))); //work
         }
         return (valid); 
         //recursive func to verify that parent is always bigger than child 
@@ -121,12 +120,15 @@ private:
     }
 
     bool is_leaf(int index) const{
-        return (index >= _how_many); //if less than how many then not leaf
+        if(index >= _how_many || (right_child_index(index) >= _how_many && left_child_index(index) >= _how_many)){
+            return true; 
+        }
+        return false; //
     }
 
     int parent_index(int i) const{
-        if(is_root(i)){ //feel like we shouldn't go here, will be handled by function?
-            return 0; //no parent 
+        if(is_root(i)){
+            return 0; //no parent so we are root
         }
         else{
             return (i-1)/2; 
@@ -148,17 +150,14 @@ private:
         if(_heap[rightChildIndex] > _heap[leftChildIndex]){
             return rightChildIndex; 
         }
-        else{
-            return leftChildIndex; 
-        }
-        //should never be here
+        return leftChildIndex; 
     }
 
     //int i --> index of the child?
     void swap_with_parent(int i){
         T child = _heap[i]; //child
-        _heap[i] = _heap[(i-1)/2];  //child == parent 
-        _heap[(i - 1)/2] = child; 
+        _heap[i] = _heap[parent_index(i)];  //child == parent 
+        _heap[parent_index(i)] = child; //parent == child
     }
 };
 

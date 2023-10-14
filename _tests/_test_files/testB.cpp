@@ -9,8 +9,9 @@ using namespace std;
 bool test_print(bool debug){
   if(debug){
     Heap<int> mHeap; 
-    int a[] = {1,2,3,4}; 
-    for(int i = 0; i < 4; i++){
+    int a[] = {20,31,17,-3,4,29,17, 3, 4,-9,45}; 
+
+    for(int i = 0; i < 11; i++){
       mHeap.insert(a[i]); 
     }
     cout<<mHeap<<endl; 
@@ -21,9 +22,9 @@ bool test_print(bool debug){
 bool test_remove(bool debug){
   if(debug){
     Heap<int> mHeap; 
-    int a[] = {1,2,3,4}; 
+    int a[] = {15,10,14}; 
 
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 3; i++){
       mHeap.insert(a[i]); 
     }
     cout<<"before remove: "<<endl; 
@@ -52,6 +53,8 @@ bool test_verify(bool debug){
   }
   return true; 
 }
+
+
 bool test_stub(bool debug = false)
 {
   if (debug){
@@ -72,11 +75,11 @@ TEST(TEST_HEAP, testPrint){
 }
 
 TEST(TEST_HEAP, testRemove){
-  EXPECT_EQ(1, test_remove(false));
+  EXPECT_EQ(1, test_remove(true));
 }
 
 TEST(TEST_HEAP, testVerify){
-  EXPECT_EQ(1, test_verify(true)); 
+  EXPECT_EQ(1, test_verify(false)); 
 }
 
 int main(int argc, char **argv) {
