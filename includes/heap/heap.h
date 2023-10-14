@@ -71,7 +71,7 @@ public:
     }                //true if tree is verified to be a heap
 
     T *heap_array(){
-        T* copyArray = new T; 
+        T* copyArray = new T[CAPACITY]; //allocate a block of memory
         T* copyWalker = copyArray; 
         for(int i = 0; i < _how_many; i++, copyWalker++){
             *copyWalker = _heap[i]; 

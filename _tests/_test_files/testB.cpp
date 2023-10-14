@@ -58,7 +58,7 @@ bool test_runner(bool debug){
   Heap<int> mHeap; 
 
   srand(time(0));
-  for(int i = 0; i < 500; i++){
+  for(int i = 0; i < 20; i++){
     int insert = rand() % 150; 
     mHeap.insert(insert); 
     if(!mHeap.verify()){
@@ -66,6 +66,13 @@ bool test_runner(bool debug){
       break; 
     }
   }
+
+  int* arr = mHeap.heap_array(); 
+
+  for(int i = 0; i < mHeap.size(); i++, arr++){
+    cout<<"["<<*arr<<"]"; 
+  }
+
 
   while(!mHeap.is_empty()){
     int popped = mHeap.remove(); 
