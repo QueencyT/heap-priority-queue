@@ -2,6 +2,7 @@
 #define HEAP_H 
 #include <iostream>
 #include <iomanip>
+#include <assert.h>
 
 using namespace std; 
 template <typename T>
@@ -12,7 +13,8 @@ public:
         
     }
 
-    void insert(const T& insert_me){
+    void insert(const T& insert_me){ //assuing not at capacity?
+        assert(_how_many < CAPACITY); 
         int index = _how_many; 
         _heap[index] = insert_me; //should be one after the last item inserted //inserting 
         T parent = _heap[parent_index(index)];  
@@ -26,9 +28,10 @@ public:
         _how_many++; 
     }   //insert into the heap 
 
-    T remove(){
+    T remove(){//assuming _how_many != 0? 
+        assert(_how_many > 0); 
         T popped = _heap[0]; //cause we want to remove largest
-        _heap[0] = _heap[_how_many - 1]; //should be last element    //now time to sink 
+        _heap[0] = _heap[_how_many - 1]; //should be last element    //now time to sink  //wait what if _how_many = 0??
         int index = 0; 
         T leftChild = _heap[left_child_index(index)], rightChild = _heap[right_child_index(index)], curr = _heap[index];  
         _how_many--;
@@ -55,7 +58,7 @@ public:
     }
 
     int capacity() const{
-        return capacity; 
+        return CAPACITY; //fixed this? 
     }
 
     friend ostream& operator << (ostream& outs, const Heap<T>& print_me){
@@ -77,7 +80,7 @@ public:
     }        
        
     //returns a copy of underlying array: 
-    //  don't forget to delete when done
+    //  don't forget to delete when done? 
 
 private:
     static const int CAPACITY = 1000;
@@ -120,19 +123,11 @@ private:
     }
 
     bool is_leaf(int index) const{
-        if(index >= _how_many || (right_child_index(index) >= _how_many && left_child_index(index) >= _how_many)){
-            return true; 
-        }
-        return false; //
+        return (index >= _how_many || (right_child_index(index) >= _how_many && left_child_index(index) >= _how_many)); 
     }
 
     int parent_index(int i) const{
-        if(is_root(i)){
-            return 0; //no parent so we are root
-        }
-        else{
-            return (i-1)/2; 
-        }
+        return (i-1)/2; 
     }
 
     int left_child_index(int i)const {

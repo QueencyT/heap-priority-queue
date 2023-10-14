@@ -54,6 +54,32 @@ bool test_verify(bool debug){
   return true; 
 }
 
+bool test_runner(bool debug){
+  Heap<int> mHeap; 
+
+  srand(time(0));
+  for(int i = 0; i < 500; i++){
+    int insert = rand() % 150; 
+    mHeap.insert(insert); 
+    if(!mHeap.verify()){
+      cout<<"invalid tree: "<<endl; 
+      break; 
+    }
+  }
+
+  while(!mHeap.is_empty()){
+    int popped = mHeap.remove(); 
+
+    if(popped < mHeap.top()){
+      cout<<"FAIL: expected popped to be greater than or equal to top "<<endl; 
+      cout<<"popped: "<<popped<<endl; 
+      cout<<"top: "<<mHeap.top()<<endl; 
+      break; 
+    }
+  }
+  return true;
+}
+
 
 bool test_stub(bool debug = false)
 {
@@ -70,12 +96,16 @@ TEST(TEST_STUB, TestStub) {
   EXPECT_EQ(1, test_stub(false));
 }
 
+TEST(TEST_HEAP, testRunner){
+  EXPECT_EQ(1, test_runner(true)); 
+}
+
 TEST(TEST_HEAP, testPrint){
   EXPECT_EQ(1, test_print(false));
 }
 
 TEST(TEST_HEAP, testRemove){
-  EXPECT_EQ(1, test_remove(true));
+  EXPECT_EQ(1, test_remove(false));
 }
 
 TEST(TEST_HEAP, testVerify){
