@@ -7,9 +7,12 @@ template <typename T>
 struct info{
     T item;
     int priority;
+    int timeStamp; //adding this?
 
-    info():item(T()), priority(0){}
-    info(T i, int p):item(i), priority(p){}
+    info():item(T()), priority(0){
+
+    }
+    info(T i, int p, int time):item(i), priority(p), timeStamp(time){}
 
     friend ostream& operator <<(ostream& outs, const info<T>& print_me){
         const bool tldr = true;
@@ -18,10 +21,18 @@ struct info{
     }
 
     friend bool operator <(const info<T>& lhs, const info<T>& rhs){
+        if(lhs.priority == rhs.priority){
+            return (lhs.timeStamp < rhs.timeStamp); //won't be possible for timestamps to be equal so don't need to consider that
+            //if enetered later, we consider smaller 
+        }
         return (lhs.priority < rhs.priority); 
     }
 
     friend bool operator >(const info<T>& lhs, const info<T>& rhs){
+         if(lhs.priority == rhs.priority){
+            return (lhs.timeStamp > rhs.timeStamp); //won't be possible for timestamps to be equal so don't need to consider that
+            //if enetered first, we consider greater 
+        }
         return (lhs.priority > rhs.priority); 
     }
 };

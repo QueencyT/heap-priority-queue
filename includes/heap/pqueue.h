@@ -12,7 +12,7 @@ public:
     PQueue(){}
 
     bool push(const T& value, int p){ //what is the boolean for? what is int p for --> priority?
-        info<T> insertedInfo(value, p); 
+        info<T> insertedInfo(value, p, timeEntered++); 
         _heap.insert(insertedInfo); 
         return true; 
    } 
@@ -49,6 +49,6 @@ public:
 
 private:
     Heap<info<T>> _heap;
-
+    int timeEntered = 0; //new field?
 };
 #endif
