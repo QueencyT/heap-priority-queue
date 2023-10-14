@@ -26,6 +26,10 @@ public:
         return _heap.remove(); 
     }
 
+    info<T> top(){ //temp function for debugging will remove later
+        return _heap.top(); 
+    }
+
     bool is_empty() const {
         return _heap.is_empty();
     }

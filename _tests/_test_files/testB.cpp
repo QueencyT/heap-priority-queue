@@ -3,6 +3,7 @@
 #include <iomanip>
 using namespace std;
 
+#include "../../includes/heap/pqueue.h"
 #include "../../includes/heap/heap.h"
 
 
@@ -55,32 +56,35 @@ bool test_verify(bool debug){
 }
 
 bool test_runner(bool debug){
-  Heap<int> mHeap; 
+  PQueue<int> mQueue; 
 
+  int arr[] = {94, 86, 92, 86, 74, 82, 86, 67, 66, 56, 72, 73, 74, 73, 70, 36, 
+  40, 42, 39, 41, 28, 65, 72, 33, 66, 48, 54, 47, 65, 31, 54, 27, 17, 39, 39, 15, 38, 21, 24, 32}; 
+ 
   srand(time(0));
-  for(int i = 0; i < 20; i++){
-    int insert = rand() % 150; 
-    mHeap.insert(insert); 
-    if(!mHeap.verify()){
+  for(int i = 0; i < 10; i++){
+    mQueue.push(arr[i], rand() % 10); //rand() % 10 priority --> 10 being max priority
+    if(!mQueue.verify()){
       cout<<"invalid tree: "<<endl; 
       break; 
     }
   }
 
-  int* arr = mHeap.heap_array(); 
+  cout<<mQueue<<endl; 
 
-  for(int i = 0; i < mHeap.size(); i++, arr++){
-    cout<<"["<<*arr<<"]"; 
-  }
-
-
-  while(!mHeap.is_empty()){
-    int popped = mHeap.remove(); 
-
-    if(popped < mHeap.top()){
+  
+  int i = 0; 
+  while(!mQueue.is_empty()){
+    info<int> popped = mQueue.Pop_debug(); 
+    cout<<"popped: "<<popped<<endl; 
+    cout<<"top: "<<mQueue.top()<<endl;
+    cout<<mQueue<<endl; 
+    cout<<"--------------------------------\n";
+    i++; 
+    if(popped < mQueue.top()){
       cout<<"FAIL: expected popped to be greater than or equal to top "<<endl; 
       cout<<"popped: "<<popped<<endl; 
-      cout<<"top: "<<mHeap.top()<<endl; 
+      cout<<"top: "<<mQueue.top()<<endl; 
       break; 
     }
   }
